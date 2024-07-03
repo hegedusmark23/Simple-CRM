@@ -24,7 +24,7 @@ import { FormsModule } from '@angular/forms';
 export class DialogAddUserComponent {
 
   user: User = new User();
-  birthDate!: Date;
+  birthDate: Date = new Date();
 
 
 onNoClick(){
@@ -32,8 +32,8 @@ onNoClick(){
 }
 
 addUser(){
-  console.log(this.user)
   this.user.birthDate = this.birthDate.getTime();
+  console.log(this.user)
 }
 
 }
