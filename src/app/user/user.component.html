@@ -1,18 +1,27 @@
-<mat-card appearance="outlined">
-  <table class="user-table">
-    <tr>
-      <th>Name</th>
-      <th>E-mail</th>
-      <th>City</th>
-    </tr>
-    <tr>
-      <td>asdasd</td>
-      <td>asdasd</td>
-      <td>asdasd</td>
-    </tr>
 
-  </table>
-</mat-card>
+ <mat-card appearance="outlined">
+    <table class="user-table">
+      <tr>
+        <th>Name</th> 
+        <th>birthDate</th>
+        <th>street</th>
+        <th>zipCode</th>
+        <th>city</th>
+      </tr>
+      @for (user of usersList; track user) {
+      <tr>
+        <td>{{user.firstName}} {{user.lastName}}</td>
+        <td>{{user.birthDate}}</td>
+        <td>{{user.street}}</td>
+        <td>{{user.zipCode}}</td>
+        <td>{{user.city}}</td>
+      </tr>
+    }
+    </table>
+  </mat-card>
+ 
+
+  
 
 
 <button (click)="openDialog()" class="add-btn" color="primary" mat-fab

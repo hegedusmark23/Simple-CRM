@@ -7,10 +7,47 @@
 
 .user-table{
     width: 100%;
+    border-collapse: collapse;
+    tr{
+        border-bottom: 1px solid rgba(0,0,0,0.4);
+        cursor: pointer;
+        &:first-child {
+            cursor: unset;
+            border-bottom: 1px solid rgba(0,0,0,0.4);
+            &:hover{
+                background-color: unset;
+            }
+        }
+        &:last-child{
+            border-bottom: 0;
+        }
+        td{
+            &:first-child{
+                padding-left: 16px;
+            }
+        }
+        th{
+            &:first-child{
+                padding-left: 16px;
+            } 
+        }
+
+        &:hover{
+            background-color: rgba(0,0,0,0.04);
+        }
+    }
+    td{
+        height: 60px;
+    }
     th {
         color: rgba(0,0,0,0.47);
         font-size: 14px;
         font-weight: 500;
         text-align: start;
     }
+}
+
+mat-card{
+    padding-left: 0;
+    padding-right: 0;
 }
