@@ -29,13 +29,12 @@ import { CommonModule } from '@angular/common';
 export class DialogAddUserComponent {
 
   firestore: Firestore = inject(Firestore);
-
+  userCollection = collection(this.firestore, 'users')
   user: User = new User();
   birthDate: Date = new Date();
-  userCollection = collection(this.firestore, 'users')
   loading: boolean = false;
 
-  constructor(public dialogRef: MatDialogRef<DialogAddUserComponent>){
+  constructor(public dialogRef: MatDialogRef<DialogAddUserComponent>) {
 
   }
 

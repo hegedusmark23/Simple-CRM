@@ -2,7 +2,8 @@
  <mat-card appearance="outlined">
     <table class="user-table">
       <tr>
-        <th>Name</th> 
+        <th>Name</th>
+        <th>E-mail</th>  
         <th>birthDate</th>
         <th>street</th>
         <th>zipCode</th>
@@ -11,6 +12,7 @@
       @for (user of usersList; track user) {
       <tr>
         <td>{{user.firstName}} {{user.lastName}}</td>
+        <td>{{user.email}}</td>
         <td>{{user.birthDate}}</td>
         <td>{{user.street}}</td>
         <td>{{user.zipCode}}</td>

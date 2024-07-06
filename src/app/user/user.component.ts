@@ -6,7 +6,7 @@ import {MatDialog, MatDialogModule} from '@angular/material/dialog';
 import { DialogAddUserComponent } from '../dialog-add-user/dialog-add-user.component';
 import { User } from '../../models/user.class';
 import {MatCardModule} from '@angular/material/card';
-import { collection, collectionData, Firestore } from '@angular/fire/firestore';
+import { collection, doc, Firestore } from '@angular/fire/firestore';
 import { onSnapshot } from "firebase/firestore";
 
 @Component({
@@ -17,6 +17,7 @@ import { onSnapshot } from "firebase/firestore";
   styleUrl: './user.component.scss'
 })
 export class UserComponent {
+
   unsubUsers;
   firestore: Firestore = inject(Firestore);
   user: User = new User();
@@ -26,14 +27,16 @@ export class UserComponent {
     this.unsubUsers = this.subUsers();
   }
 
-  setUserObject(obj: any): User {
+  setUserObject(obj: any, id: string): User {
     return new User({
+        id: id,
         firstName: obj.firstName || "",
         lastName: obj.lastName || "",
         birthDate: obj.birthDate || "",
         street: obj.street || "",
         zipCode: obj.zipCode || "",
-        city: obj.city || ""
+        city: obj.city || "",
+        email: obj.email || ""
     });
 }
 
@@ -41,7 +44,8 @@ subUsers() {
     return onSnapshot(this.getUsersRef(), (users) => {
         this.usersList = [];
         users.forEach(element => {
-            this.usersList.push(this.setUserObject(element.data()));
+            this.usersList.push(this.setUserObject(element.data(), element.id));
+            console.log(element.data());
         });
     });
 }
@@ -56,5 +60,9 @@ subUsers() {
 
   getUsersRef(){
     return collection(this.firestore, 'users')
+  }
+
+  getUsersId(colId:string, docId:string){
+    return doc(collection(this.firestore, colId), docId)
   }
 }

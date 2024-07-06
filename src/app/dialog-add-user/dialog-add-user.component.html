@@ -20,6 +20,14 @@
 
         <div>
             <mat-form-field class="w-100" appearance="outline">
+                <mat-label>E-mail</mat-label>
+                <input [disabled]="loading" [(ngModel)]="user.email" matInput placeholder="E.g .xyz@gmail.com">
+                <mat-hint>Please enter an E-mail</mat-hint>
+            </mat-form-field>
+        </div>
+
+        <div>
+            <mat-form-field class="w-100" appearance="outline">
                 <mat-label>Birth date</mat-label>
                 <input [disabled]="loading" [(ngModel)]="user.birthDate" matInput [matDatepicker]="picker">
                 <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
