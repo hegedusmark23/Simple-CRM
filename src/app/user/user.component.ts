@@ -8,11 +8,12 @@ import { User } from '../../models/user.class';
 import {MatCardModule} from '@angular/material/card';
 import { collection, doc, Firestore } from '@angular/fire/firestore';
 import { onSnapshot } from "firebase/firestore";
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-user',
   standalone: true,
-  imports: [MatIcon,MatButtonModule,MatTooltipModule,MatDialogModule, MatCardModule],
+  imports: [MatIcon,MatButtonModule,MatTooltipModule,MatDialogModule, MatCardModule, RouterLink],
   templateUrl: './user.component.html',
   styleUrl: './user.component.scss'
 })
@@ -41,13 +42,14 @@ export class UserComponent {
 }
 
 subUsers() {
-    return onSnapshot(this.getUsersRef(), (users) => {
-        this.usersList = [];
-        users.forEach(element => {
-            this.usersList.push(this.setUserObject(element.data(), element.id));
-            console.log(element.data());
-        });
+  return onSnapshot(this.getUsersRef(), (users) => {
+    this.usersList = [];
+    users.forEach(element => {
+      const userData = element.data();
+      userData['id'] = element.id;
+      this.usersList.push(this.setUserObject(userData, element.id));
     });
+  });
 }
 
   ngonDestroy(){

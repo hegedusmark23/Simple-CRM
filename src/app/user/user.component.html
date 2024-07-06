@@ -3,19 +3,13 @@
     <table class="user-table">
       <tr>
         <th>Name</th>
-        <th>E-mail</th>  
-        <th>birthDate</th>
-        <th>street</th>
-        <th>zipCode</th>
+        <th>E-mail</th>
         <th>city</th>
       </tr>
       @for (user of usersList; track user) {
-      <tr>
+      <tr [routerLink]="['/user/' + user.id]">
         <td>{{user.firstName}} {{user.lastName}}</td>
         <td>{{user.email}}</td>
-        <td>{{user.birthDate}}</td>
-        <td>{{user.street}}</td>
-        <td>{{user.zipCode}}</td>
         <td>{{user.city}}</td>
       </tr>
     }
