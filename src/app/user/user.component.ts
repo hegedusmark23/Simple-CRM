@@ -6,7 +6,7 @@ import {MatDialog, MatDialogModule} from '@angular/material/dialog';
 import { DialogAddUserComponent } from '../dialog-add-user/dialog-add-user.component';
 import { User } from '../../models/user.class';
 import {MatCardModule} from '@angular/material/card';
-import { collection, doc, Firestore } from '@angular/fire/firestore';
+import { collection, doc, Firestore, updateDoc } from '@angular/fire/firestore';
 import { onSnapshot } from "firebase/firestore";
 import { RouterLink } from '@angular/router';
 
@@ -50,6 +50,19 @@ subUsers() {
       this.usersList.push(this.setUserObject(userData, element.id));
     });
   });
+}
+
+async updateUser(user: User) {
+  if (user.id) {
+    await updateDoc(this.getSingleDocRef(user.id), user.toJSON()).catch(
+      (err) => {
+        console.log(err);
+      });
+  }
+}
+
+getSingleDocRef( docId: string) {
+  return doc(collection(this.firestore, 'users'), docId);
 }
 
   ngonDestroy(){
