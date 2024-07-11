@@ -6,7 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { User } from '../../models/user.class';
 import { FormsModule } from '@angular/forms';
-import { addDoc, collection, Firestore } from '@angular/fire/firestore';
+import { addDoc, collection, doc, Firestore, setDoc } from '@angular/fire/firestore';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { CommonModule } from '@angular/common';
 
@@ -50,15 +50,21 @@ export class DialogAddUserComponent {
   }
 
   async uploadUser() {
-    await addDoc(this.userCollection, this.user.toJSON()).catch(
-      (err) => { console.error(err) }
-    ).then(
+    await addDoc(this.userCollection, this.user.toJSON()).then(
       (docRef) => {
         this.loading = true;
-        console.log('User added with ID:', docRef);
+        this.user.id = docRef.id;  
+        this.updateUserIdInDatabase(docRef.id);
         this.dialogRef.close();
       }
-    )
+    ).catch(
+      (err) => { console.error(err) }
+    );
+  }
+  
+  async updateUserIdInDatabase(id: string) {
+    const userRef = doc(this.userCollection, id);
+    await setDoc(userRef, { ...this.user.toJSON(), id: id }, { merge: true });
   }
 
 }

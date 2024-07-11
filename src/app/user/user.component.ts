@@ -29,6 +29,7 @@ export class UserComponent {
   }
 
   setUserObject(obj: any, id: string): User {
+    console.log("Setting user object with id: ", id); // Debug log
     return new User({
         id: id,
         firstName: obj.firstName || "",
@@ -42,27 +43,15 @@ export class UserComponent {
 }
 
 subUsers() {
-  return onSnapshot(this.getUsersRef(), (users) => {
+  return onSnapshot(this.getUsersRef(), (snapshot) => {
     this.usersList = [];
-    users.forEach(element => {
-      const userData = element.data();
-      userData['id'] = element.id;
-      this.usersList.push(this.setUserObject(userData, element.id));
+    snapshot.forEach(doc => {
+      const userData = doc.data();
+      userData['id'] = doc.id; 
+      const user = this.setUserObject(userData, doc.id);
+      this.usersList.push(user);
     });
   });
-}
-
-async updateUser(user: User) {
-  if (user.id) {
-    await updateDoc(this.getSingleDocRef(user.id), user.toJSON()).catch(
-      (err) => {
-        console.log(err);
-      });
-  }
-}
-
-getSingleDocRef( docId: string) {
-  return doc(collection(this.firestore, 'users'), docId);
 }
 
   ngonDestroy(){

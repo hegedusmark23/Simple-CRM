@@ -30,20 +30,24 @@ export class DialogEditUserComponent {
 
   firestore: Firestore = inject(Firestore);
   loading: boolean = false;
-  user!: User;
+  user: User = new User();
   birthDate!: Date;
   userCollection = collection(this.firestore, 'users')
-  constructor(public dialogRef: MatDialogRef<DialogEditUserComponent>) {
 
-  }
+  constructor(public dialogRef: MatDialogRef<DialogEditUserComponent>) {}
 
   async updateUser(user: User) {
-    if (user.id) {
       await updateDoc(this.getSingleDocRef(user.id), user.toJSON()).catch(
         (err) => {
-          console.log(err);
+          console.log(err, user);
+        }).then( () => {
+          this.loading = false;
+          this.dialogRef.close();
         });
-    }
+  }
+
+  saveUser() {
+    this.updateUser(this.user)
   }
   
   getSingleDocRef( docId: string) {
@@ -54,7 +58,4 @@ export class DialogEditUserComponent {
     this.dialogRef.close();
   }
 
-  saveUser() {
-    this.updateUser(this.user)
-  }
 }

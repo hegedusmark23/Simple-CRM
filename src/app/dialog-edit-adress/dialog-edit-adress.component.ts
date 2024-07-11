@@ -6,7 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { User } from '../../models/user.class';
 import { FormsModule } from '@angular/forms';
-import { addDoc, collection, Firestore } from '@angular/fire/firestore';
+import { addDoc, collection, doc, Firestore, updateDoc } from '@angular/fire/firestore';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { CommonModule } from '@angular/common';
 
@@ -39,8 +39,22 @@ export class DialogEditAdressComponent {
     this.dialogRef.close();
   }
 
-  saveAdress(){
-    
-  }
+  async updateAdress(user: User) {
+    await updateDoc(this.getSingleDocRef(user.id), user.toJSON()).catch(
+      (err) => {
+        console.log(err, user);
+      }).then( () => {
+        this.loading = false;
+        this.dialogRef.close();
+      });
+}
+
+saveAdress() {
+  this.updateAdress(this.user)
+}
+
+getSingleDocRef( docId: string) {
+  return doc(collection(this.firestore, 'users'), docId);
+}
 
 }
