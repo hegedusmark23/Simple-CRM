@@ -28,7 +28,7 @@ import { DialogEditAdressComponent } from '../dialog-edit-adress/dialog-edit-adr
 export class UserDetailComponent {
   firestore: Firestore = inject(Firestore);
   userId: string = '';
-  user: User = new User();
+  user: User = new User;
 
   constructor(private route: ActivatedRoute, public dialog: MatDialog) {}
 

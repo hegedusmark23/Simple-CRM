@@ -10,7 +10,9 @@ describe('UserComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [UserComponent],
-      providers: [Firestore]
+      providers: [
+        { provide: Firestore, useValue: {} }
+      ]
     })
     .compileComponents();
     

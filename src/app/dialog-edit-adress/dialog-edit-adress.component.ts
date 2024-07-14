@@ -29,7 +29,7 @@ import { CommonModule } from '@angular/common';
 export class DialogEditAdressComponent {
   firestore: Firestore = inject(Firestore);
   loading: boolean = false;
-  user!: User;
+  user: User = new User;
 
   constructor(public dialogRef: MatDialogRef<DialogEditAdressComponent>) {
 
